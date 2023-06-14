@@ -8,9 +8,22 @@
   </div>
 </template>
 
-<script setup>
+<script>
 import {RouterView} from 'vue-router'
 import Navbar from "@/components/Navbar.vue";
+
+export default {
+  components: {
+    Navbar,RouterView
+  },
+  mounted() {
+    this.$store.dispatch('getUserMe')
+        .catch(() => {
+          this.$router.push({name: "login"})
+        })
+
+  }
+}
 </script>
 
 <style scoped>

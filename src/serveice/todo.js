@@ -7,6 +7,12 @@ const TodoService = {
     getTodos(params) {
         return axios.get(`todo/list`, {params})
     },
+    updateTodo(todo) {
+        return axios.put(`todo/update/${todo.id}`, todo)
+    },
+    deleteTodo(id) {
+        return axios.delete(`todo/delete/${id}`)
+    },
 }
 
 

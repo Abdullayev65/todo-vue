@@ -15,8 +15,10 @@
 
   </div>
 
-  <div v-if="todos && todos.length>1">
-    <TodoBox v-for="todo in todos" />
+  <div v-if="todos && todos.length>1" class="list-group">
+    <TodoBox v-for="todo in todos"
+             :todo="todo"
+             class="list-group-item list-group-item-action" />
   </div>
 
 </template>

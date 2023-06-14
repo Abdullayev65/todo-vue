@@ -24,6 +24,24 @@ const mutations = {
 
         state.err = err
     },
+    updateTodoStart(state) {
+    },
+    updateTodoSuccess(state, user) {
+
+    },
+    updateTodoFail(state, err) {
+
+        state.err = err
+    },
+    deleteTodoStart(state) {
+    },
+    deleteTodoSuccess(state, user) {
+
+    },
+    deleteTodoFail(state, err) {
+
+        state.err = err
+    },
 }
 
 const actions = {
@@ -65,6 +83,46 @@ const actions = {
                 })
                 .catch((err) => {
                     ctx.commit('getTodosFail')
+                    console.log(`err:`, err)
+                })
+        })
+    },
+    updateTodo(ctx, todo) {
+        return new Promise((resolve, reject) => {
+            ctx.commit('updateTodoStart')
+
+            TodoService.updateTodo(todo)
+                .then((res) => {
+                    if (res.data) {
+                        ctx.commit('updateTodoSuccess', res.data)
+                        resolve(res.data)
+                    } else {
+                        ctx.commit('updateTodoFail', res.data)
+                        reject(res.data)
+                    }
+                })
+                .catch((err) => {
+                    ctx.commit('updateTodoFail')
+                    console.log(`err:`, err)
+                })
+        })
+    },
+    deleteTodo(ctx, id) {
+        return new Promise((resolve, reject) => {
+            ctx.commit('deleteTodoStart')
+
+            TodoService.deleteTodo(id)
+                .then((res) => {
+                    if (res.data) {
+                        ctx.commit('deleteTodoSuccess', res.data)
+                        resolve(res.data)
+                    } else {
+                        ctx.commit('deleteTodoFail', res.data)
+                        reject(res.data)
+                    }
+                })
+                .catch((err) => {
+                    ctx.commit('deleteTodoFail')
                     console.log(`err:`, err)
                 })
         })

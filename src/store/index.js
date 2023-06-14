@@ -1,7 +1,6 @@
 import {createStore} from 'vuex'
 import auth from "@/models/auth.js"
 import todo from "@/models/todo.js"
-import user from "@/models/user.js";
 
 const store = createStore({
     state() {
@@ -21,7 +20,7 @@ const store = createStore({
     mutations: {},
     actions: {},
     modules: {
-        auth, user, todo
+        auth, todo
     }
 })
 

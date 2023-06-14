@@ -140,39 +140,17 @@ const actions = {
 
             AuthService.getUserMe()
                 .then((res) => {
-                    if (res.data['status']) {
-                        const user = res.data['res']
+                    if (res.data) {
+                        const user = res.data
                         ctx.commit('currentUserSuccess', user)
                         resolve(user)
                     } else {
-                        ctx.commit('currentUserFail', res.data['msg'])
-                        reject(res.data['msg'])
+                        ctx.commit('currentUserFail', res.data)
+                        reject(res.data)
                     }
                 })
                 .catch((err) => {
                     ctx.commit('currentUserFail', err)
-                    console.log(`err:`, err)
-                    reject(err)
-                })
-        })
-    },
-    getUserByUsername(ctx, username) {
-        return new Promise((resolve, reject) => {
-            ctx.commit('getUserByUsernameStart')
-
-            AuthService.getUserByUsername(username)
-                .then((res) => {
-                    if (res.data['status']) {
-                        const user = res.data['res']
-                        ctx.commit('getUserByUsernameSuccess', user)
-                        resolve(user)
-                    } else {
-                        ctx.commit('getUserByUsernameFail', res.data['msg'])
-                        reject(res.data['msg'])
-                    }
-                })
-                .catch((err) => {
-                    ctx.commit('getUserByUsernameFail', err)
                     console.log(`err:`, err)
                     reject(err)
                 })
