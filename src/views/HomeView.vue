@@ -18,8 +18,21 @@
   <div v-if="todos && todos.length>1" class="list-group">
     <TodoBox v-for="todo in todos"
              :todo="todo"
-             class="list-group-item list-group-item-action" />
+             class="list-group-item list-group-item-action"/>
   </div>
+
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item"
+          v-if="offset!==0"
+          @click="clickOnPrevious">
+        <a class="page-link" href="#">Previous</a></li>
+      <li class="page-item"
+          v-if="todos.length>=limit"
+          @click="clickOnNext">
+        <a class="page-link" href="#">Next</a></li>
+    </ul>
+  </nav>
 
 </template>
 
@@ -31,6 +44,8 @@ export default {
     return {
       todos: [],
       newTodo: '',
+      limit: 10,
+      offset: 0,
     }
   },
   methods: {
@@ -54,13 +69,27 @@ export default {
           })
     },
     getTodosFromService() {
-      this.$store.dispatch('getTodos', {})
+      const props = {
+        limit: this.limit,
+        offset: this.offset,
+      }
+      this.$store.dispatch('getTodos', props)
           .then((todos) => {
             this.todos = todos
           })
           .catch((err) => {
             alert(err)
           })
+    },
+    clickOnPrevious() {
+      if (this.offset === 0)
+        return
+      this.offset -= 10
+      this.getTodosFromService()
+    },
+    clickOnNext() {
+      this.offset += 10
+      this.getTodosFromService()
     },
   },
   mounted() {
